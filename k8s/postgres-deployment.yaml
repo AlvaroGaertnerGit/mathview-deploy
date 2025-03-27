@@ -21,9 +21,9 @@ spec:
             - name: POSTGRES_DB
               value: "userdb"
             - name: POSTGRES_USER
-              value: "user"
+              value: "garner"
             - name: POSTGRES_PASSWORD
-              value: "password"
+              value: "GarnerDB@22"
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-storage
