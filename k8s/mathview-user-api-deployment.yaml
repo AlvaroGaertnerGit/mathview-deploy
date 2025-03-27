@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mathview-user-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mathview-user-api
+  template:
+    metadata:
+      labels:
+        app: mathview-user-api
+    spec:
+      containers:
+        - name: user-api
+          image: ghcr.io/alvarogaertnergit/api-users-mathview
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/userdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password

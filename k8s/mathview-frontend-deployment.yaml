@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mathview-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mathview-frontend
+  template:
+    metadata:
+      labels:
+        app: mathview-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/alvarogaertnergit/front-mathview
+          ports:
+            - containerPort: 80

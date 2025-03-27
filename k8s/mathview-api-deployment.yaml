@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mathview-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mathview-api
+  template:
+    metadata:
+      labels:
+        app: mathview-api
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/alvarogaertnergit/api-mathview
+          ports:
+            - containerPort: 8000

@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mathview-user-api
+spec:
+  selector:
+    app: mathview-user-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mathview-api
+spec:
+  selector:
+    app: mathview-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mathview-frontend
+spec:
+  selector:
+    app: mathview-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
