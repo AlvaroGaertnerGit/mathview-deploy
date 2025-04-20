@@ -1,0 +1,34 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'AzureConnection-MathView'
+  azureResourceGroup: 'MathView-RG'
+  azureCluster: 'mathview-aks'
+  k8sNamespace: 'default'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployToAKS
+    displayName: 'Deploy to AKS'
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: $(azureSubscription)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          echo "📡 Conectando al clúster AKS..."
+          az aks get-credentials --resource-group $(azureResourceGroup) --name $(azureCluster) --overwrite-existing
+
+          echo "🚀 Desplegando manifiestos de Kubernetes..."
+          kubectl apply -f k8s/postgres-deployment.yaml
+          kubectl apply -f k8s/mathview-api-deployment.yaml
+          kubectl apply -f k8s/mathview-user-api-deployment.yaml
+          kubectl apply -f k8s/mathview-frontend-deployment.yaml
+          kubectl apply -f k8s/services.yaml
+      displayName: 'Aplicar manifiestos YAML en AKS'
